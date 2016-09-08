@@ -1,6 +1,5 @@
 defmodule Todo.TodoChannel do
   use Todo.Web, :channel
-  alias Todo.{Todo, Todos, TodoView}
 
   def join("todos:lobby", payload, socket) do
     if authorized?(payload) do
@@ -10,7 +9,7 @@ defmodule Todo.TodoChannel do
     end
   end
 
-  def handle_in("todo:event", %{"todo" => todo_params}, socket) do
+  def handle_in("todo:event", %{"todo" => _todo_params}, _socket) do
   end
 
   defp authorized?(_payload) do

@@ -1,3 +1,3 @@
 defmodule Todo.Todos do
-  alias Todo.Repo
+  #alias Todo.Repo
 end
