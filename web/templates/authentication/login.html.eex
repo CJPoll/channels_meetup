@@ -1,0 +1,24 @@
+<h2> Login </h2>
+
+<form action="/sessions" method="POST">
+  <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>"/>
+  <label> Email </label>
+  <input type="email" name="user[email]"/>
+  <label> Password </label>
+  <input type="password" name="user[password]"/>
+  <input type="Submit" value="Login" />
+</form>
+
+<h2> Register </h2>
+
+<form action="/users" method="POST">
+  <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>"/>
+  <label> Email </label>
+  <input type="email" name="user[email]"/>
+  <label> Password </label>
+  <input type="password" name="user[password]"/>
+  <label> Confirm Password </label>
+  <input type="password" name="user[password_confirm]"/>
+
+  <input type="Submit" value="Register" />
+</form>
