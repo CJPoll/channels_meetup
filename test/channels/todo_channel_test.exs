@@ -6,14 +6,14 @@ defmodule Todo.TodoChannelTest do
   setup do
     {:ok, _, socket} =
       socket("user_id", %{some: :assign})
-      |> subscribe_and_join(TodoChannel, "todo:lobby")
+      |> subscribe_and_join(TodoChannel, "todos:lobby")
 
     {:ok, socket: socket}
   end
 
-  #test "ping replies with status ok", %{socket: socket} do
-  #  ref = push socket, "ping", %{"hello" => "there"}
-  #  assert_reply ref, :ok, %{"hello" => "there"}
+  #test "todo:create replies with status ok", %{socket: socket} do
+  #  ref = push socket, "todo:create", %{"todo" => %{"name" => "Make an app"}}
+  #  assert_reply ref, :ok, %{}
   #end
 
   #test "shout broadcasts to todo:lobby", %{socket: socket} do
