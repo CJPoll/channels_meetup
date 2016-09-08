@@ -3,6 +3,8 @@ defmodule Todo.TodoChannelTest do
 
   alias Todo.TodoChannel
 
+  @valid_todo_params %{"name" => "Make an app"}
+  @invalid_todo_params %{"hello" => "world"}
   setup do
     {:ok, _, socket} =
       socket("user_id", %{some: :assign})
@@ -11,18 +13,35 @@ defmodule Todo.TodoChannelTest do
     {:ok, socket: socket}
   end
 
-  #test "todo:create replies with status ok", %{socket: socket} do
-  #  ref = push socket, "todo:create", %{"todo" => %{"name" => "Make an app"}}
-  #  assert_reply ref, :ok, %{}
-  #end
+  describe "todo:create" do
+    @tag :skip
+    test "replies with status ok", %{socket: socket} do
+      ref = push socket, "todo:create", %{"todo" => @valid_todo_params}
+      assert_reply ref, :ok
+    end
 
-  #test "shout broadcasts to todo:lobby", %{socket: socket} do
-  #  push socket, "shout", %{"hello" => "all"}
-  #  assert_broadcast "shout", %{"hello" => "all"}
-  #end
+    @tag :skip
+    test "creates a new todo", %{socket: socket} do
+      ref = push socket, "todo:create", %{"todo" => @valid_todo_params}
+      assert_reply ref, :ok
+      assert Repo.one(Todo.Todo).name == "Make an app"
+    end
 
-  #test "broadcasts are pushed to the client", %{socket: socket} do
-  #  broadcast_from! socket, "broadcast", %{"some" => "data"}
-  #  assert_push "broadcast", %{"some" => "data"}
-  #end
+    @tag :skip
+    test "replies with {error, changeset} on failure", %{socket: socket} do
+      ref = push socket, "todo:create", %{"todo" => @invalid_todo_params}
+      assert_reply ref, :error, %{}
+    end
+  end
+
+  describe "todo:complete" do
+    @tag :skip
+    test "broadcasts on success", %{socket: socket} do
+      {:ok, %Todo.Todo{id: id}} = Todo.Todos.create(@valid_todo_params)
+      ref = push socket, "todo:complete", %{"todo_id" => id}
+      assert_reply ref, :ok, %{}
+      assert_broadcast "todo:completed", %{"todoId" => todo_id}
+      assert todo_id == id
+    end
+  end
 end
