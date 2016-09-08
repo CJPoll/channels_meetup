@@ -9,6 +9,12 @@ config :todo, Todo.Endpoint,
 config :todo,
   salt: "1bd95522-1bed-4ef1-abac-1de3f389d682"
 
+config :guardian, Guardian,
+  issuer: "Todo",
+  ttl: { 30, :days  },
+  secret_key: "kdjfkjdsakjfkasj",
+  serializer: Todo.GuardianSerializer
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

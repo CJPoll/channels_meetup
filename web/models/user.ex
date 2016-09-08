@@ -15,7 +15,7 @@ defmodule Todo.User do
 
   def registration_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, @registration_fields)
+    |> cast(params, [:email, :password, :password_confirm])
     |> validate_required(@registration_fields)
     |> unique_constraint(:email)
     |> validate_password_confirmation

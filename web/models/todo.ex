@@ -15,7 +15,7 @@ defmodule Todo.Todo do
   end
 
   def completed(query) do
-    from t in Todo.Todo,
-      where: t.completed == false
+    from todo in query,
+      where: todo.completed == false
   end
 end
