@@ -1,6 +1,7 @@
 defmodule Todo.UserSocket do
   use Phoenix.Socket
 
+  channel "todos:*", Todo.TodoChannel
   ## Channels
   # channel "room:*", Todo.RoomChannel
 
